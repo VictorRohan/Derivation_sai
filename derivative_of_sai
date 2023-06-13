@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct TreeNode {
+    char data;
+    struct TreeNode* left;
+    struct TreeNode* right;
+} TreeNode;
+
+TreeNode* createNode(char data) {
+    TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+TreeNode* createExpressionTree() {
+    // Create the tree nodes
+    TreeNode* root = createNode('-');
+    TreeNode* deriNode1 = createNode('d');
+    TreeNode* deriNode2 = createNode('d');
+    TreeNode* xNode1 = createNode('x');
+    TreeNode* saiNode = createNode('p');
+    TreeNode* xNode2 = createNode('x');
+    TreeNode* xNode3 = createNode('x');
+    TreeNode* divNode = createNode('/');
+    TreeNode* deriNode3 = createNode('d');
+    TreeNode* numNode1 = createNode('1');
+    TreeNode* powNode = createNode('^');
+    TreeNode* deriNode4 = createNode('d');
+    TreeNode* tNode1 = createNode('t');
+    TreeNode* vNode = createNode('v');
+    TreeNode* numNode2 = createNode('2');
+    TreeNode* saiNode2 = createNode('p');
+    TreeNode* tNode2 = createNode('t');
+
+    // Connect the nodes to form the expression tree
+    root->left = deriNode1;
+    deriNode1->left = deriNode2;
+    deriNode1->right = xNode1;
+    deriNode2->left = saiNode;
+    deriNode2->right = xNode2;
+    xNode3->left = divNode;
+    xNode3->right = deriNode3;
+    root->right = xNode3;
+    divNode->left = numNode1;
+    divNode->right = powNode;
+    deriNode3->left = deriNode4;
+    deriNode3->right = tNode1;
+    powNode->left = vNode;
+    powNode->right = numNode2;
+    deriNode4->left = saiNode2;
+    deriNode4->right = tNode2;
+
+    return root;
+}
+
+void printTree(TreeNode* root, int space) {
+    if (root == NULL)
+        return;
+
+    space += 4;
+
+    printTree(root->right, space);
+
+    printf("\n");
+    for (int i = 4; i < space; i++)
+        printf(" ");
+    printf("%c\n", root->data);
+
+    printTree(root->left, space);
+}
+
+int main() {
+    TreeNode* root = createExpressionTree();
+
+    printf("Expression in tree form:\n");
+    printTree(root, 0);
+
+    return 0;
+}
